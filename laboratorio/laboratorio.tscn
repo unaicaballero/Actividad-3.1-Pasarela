@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://52x6335vlcaj"]
+
+[ext_resource type="Script" uid="uid://bsclx8ep36ohv" path="res://laboratorio.gd" id="1"]
+[ext_resource type="Script" uid="uid://chcdj58yiq3e3" path="res://jugador.gd" id="2"]
+
+[sub_resource type="RectangleShape2D" id="suelo"]
+size = Vector2(330, 36)
+
+[sub_resource type="RectangleShape2D" id="suelo_derecho"]
+size = Vector2(385, 36)
+
+[sub_resource type="RectangleShape2D" id="meta"]
+size = Vector2(44, 80)
+
+[sub_resource type="RectangleShape2D" id="jugador"]
+size = Vector2(24, 32)
+
+[node name="Laboratorio" type="Node2D" unique_id=1957935598]
+script = ExtResource("1")
+
+[node name="Titulo" type="Label" parent="." unique_id=931801287]
+offset_left = 28.0
+offset_top = 22.0
+theme_override_font_sizes/font_size = 30
+text = "La pasarela"
+
+[node name="Estado" type="Label" parent="." unique_id=859642721]
+offset_left = 28.0
+offset_top = 68.0
+theme_override_font_sizes/font_size = 18
+text = "Llega a la meta. ← → para moverte. Espacio para saltar. R para repetir"
+
+[node name="IndicadorMeta" type="Label" parent="." unique_id=1245972353]
+offset_left = 683.0
+offset_top = 208.0
+text = "META"
+
+[node name="PasarelaIzquierda" type="StaticBody2D" parent="." unique_id=999402650]
+position = Vector2(165, 330)
+
+[node name="Forma" type="CollisionShape2D" parent="PasarelaIzquierda" unique_id=1252793085]
+shape = SubResource("suelo")
+
+[node name="Dibujo" type="Polygon2D" parent="PasarelaIzquierda" unique_id=1355399336]
+color = Color(0.36, 0.53, 0.69, 1)
+polygon = PackedVector2Array(-165, -18, 165, -18, 165, 18, -165, 18)
+
+[node name="PasarelaDerecha" type="StaticBody2D" parent="." unique_id=311316622]
+position = Vector2(607.5, 330)
+
+[node name="Forma" type="CollisionShape2D" parent="PasarelaDerecha" unique_id=2096059166]
+shape = SubResource("suelo_derecho")
+
+[node name="Dibujo" type="Polygon2D" parent="PasarelaDerecha" unique_id=196746709]
+color = Color(0.36, 0.53, 0.69, 1)
+polygon = PackedVector2Array(-192.5, -18, 192.5, -18, 192.5, 18, -192.5, 18)
+
+[node name="Meta" type="Area2D" parent="." unique_id=625556646]
+position = Vector2(705, 272)
+collision_layer = 0
+collision_mask = 2
+
+[node name="Forma" type="CollisionShape2D" parent="Meta" unique_id=2083658940]
+shape = SubResource("meta")
+
+[node name="Dibujo" type="Polygon2D" parent="Meta" unique_id=1819632861]
+color = Color(0.23, 0.68, 0.48, 1)
+polygon = PackedVector2Array(-22, -40, 22, -40, 22, 40, -22, 40)
+
+[node name="Jugador" type="CharacterBody2D" parent="." unique_id=1513662374]
+position = Vector2(65, 275)
+collision_layer = 2
+script = ExtResource("2")
+
+[node name="Forma" type="CollisionShape2D" parent="Jugador" unique_id=759131432]
+shape = SubResource("jugador")
+
+[node name="Dibujo" type="Polygon2D" parent="Jugador" unique_id=2057564993]
+color = Color(0.98, 0.72, 0.26, 1)
+polygon = PackedVector2Array(-12, -16, 12, -16, 12, 16, -12, 16)
+
+[connection signal="body_entered" from="Meta" to="." method="_on_meta_body_entered"]
